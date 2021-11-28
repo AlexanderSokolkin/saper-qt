@@ -1,0 +1,10 @@
+#ifndef STATEFIELDS_H
+#define STATEFIELDS_H
+
+enum State {
+	BEGINNER,
+	AMATEUR,
+	PROFESSIONAL
+};
+
+#endif // STATEFIELDS_H

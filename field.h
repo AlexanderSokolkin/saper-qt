@@ -8,11 +8,14 @@
 
 class Field : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit Field(QWidget *parent = nullptr);
+	explicit Field(QWidget *parent = nullptr);
 
-	void fieldCreate(State t_state);
+	void fieldCreate(State t_state,
+					 int t_cellWidth = 0,
+					 int t_cellHeight = 0,
+					 int t_bombCount = 0);
 
 signals:
 	void sigBoom();

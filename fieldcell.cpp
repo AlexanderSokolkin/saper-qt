@@ -1,4 +1,5 @@
 #include "fieldcell.h"
+#include "helper.h"
 #include <QSizePolicy>
 #include <QDebug>
 
@@ -11,8 +12,7 @@ FieldCell::FieldCell(int t_position, QWidget* parent) :
 	m_clickCount = 0;
 	m_position = t_position;
 	setStyleSheet("QPushButton {background-color: #9090e8; color: black}");
-
-	setFixedSize(30, 30);
+	setFixedSize(BUTTONS_SIZE, BUTTONS_SIZE);
 }
 void FieldCell::mouseReleaseEvent(QMouseEvent* event)
 {

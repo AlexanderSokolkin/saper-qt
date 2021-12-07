@@ -7,7 +7,7 @@
 
 class FieldCell : public QPushButton
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	FieldCell(int t_position, QWidget* parent = nullptr);
 
@@ -25,7 +25,7 @@ public:
 
 signals:
 	void sigClick(int t_fieldCellPos);
-	
+
 private:
 	bool	m_isBomb;
 	bool	m_isOpen;

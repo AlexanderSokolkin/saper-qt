@@ -10,10 +10,10 @@
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+	~MainWindow();
 
 private:
 	Field*				m_field;
@@ -24,12 +24,19 @@ private:
 	QAction*			m_beginner;
 	QAction*			m_amateur;
 	QAction*			m_professional;
+	QAction*			m_userMode;
+
+	// For usermode
+	int		m_cellsWidth;
+	int		m_cellsHeight;
+	int		m_bombCount;
 
 private slots:
 	void slotRestartButtonClick();
 	void slotOnBeginnerTriggered();
 	void slotOnAmateurTriggered();
 	void slotOnProfessionalTriggered();
+	void slotOnUserModeTriggered();
 	void recreateField();
 };
 #endif // MAINWINDOW_H

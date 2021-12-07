@@ -15,12 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
         field.cpp \
-        fieldcell.cpp
+        fieldcell.cpp \
+        usermodedialog.cpp
 
 HEADERS  += mainwindow.h \
             field.h \
             fieldcell.h \
-            statefields.h
+            statefields.h \
+            helper.h \
+            usermodedialog.h
 
 DISTFILES += \
             ownSaper.pro.user
+
+FORMS += \
+            usermodedialog.ui

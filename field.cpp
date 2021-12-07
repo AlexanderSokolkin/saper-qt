@@ -1,8 +1,9 @@
+#include "field.h"
+#include "helper.h"
 #include <QGridLayout>
 #include <QSet>
 #include <QMessageBox>
 #include <ctime>
-#include "field.h"
 
 Field::Field(QWidget* parent) : QWidget(parent)
 {
@@ -10,27 +11,35 @@ Field::Field(QWidget* parent) : QWidget(parent)
 	m_openCells = 0;
 }
 
-void Field::fieldCreate(State t_state)
+void Field::fieldCreate(State t_state,
+						int t_cellWidth,
+						int t_cellHeight,
+						int t_bombCount)
 {
 	switch (t_state) {
 		case State::BEGINNER:
-			m_fieldWidth = 10;
-			m_fieldHeight = 10;
-			m_cellsCount = 100;
-			m_bombCount = 10;
+			m_fieldWidth = BEGINNER_WIDTH;
+			m_fieldHeight = BEGINNER_HEIGHT;
+			m_cellsCount = BEGINNER_WIDTH * BEGINNER_HEIGHT;
+			m_bombCount = BEGINNER_BOMB_COUNT;
 			break;
 		case State::AMATEUR:
-			m_fieldWidth = 15;
-			m_fieldHeight = 20;
-			m_cellsCount = 300;
-			m_bombCount = 30;
+			m_fieldWidth = AMATEUR_WIDTH;
+			m_fieldHeight = AMATEUR_HEIGHT;
+			m_cellsCount = AMATEUR_WIDTH * AMATEUR_HEIGHT;
+			m_bombCount = AMATEUR_BOMB_COUNT;
 			break;
 		case State::PROFESSIONAL:
-			m_fieldWidth = 30;
-			m_fieldHeight = 20;
-			m_cellsCount = 600;
-			m_bombCount = 100;
+			m_fieldWidth = PROFESSIONAL_WIDTH;
+			m_fieldHeight = PROFESSIONAL_HEIGHT;
+			m_cellsCount = PROFESSIONAL_WIDTH * PROFESSIONAL_HEIGHT;
+			m_bombCount = PROFESSIONAL_BOMB_COUNT;
 			break;
+		case State::USER_MODE:
+			m_fieldWidth = t_cellWidth;
+			m_fieldHeight = t_cellHeight;
+			m_cellsCount = t_cellWidth * t_cellHeight;
+			m_bombCount = t_bombCount;
 		default:
 			break;
 	}
@@ -40,7 +49,6 @@ void Field::fieldCreate(State t_state)
 	QGridLayout* glayout = new QGridLayout(this);
 	glayout->setHorizontalSpacing(0);
 	glayout->setVerticalSpacing(0);
-	glayout->setSizeConstraint(QLayout::SetMinimumSize);
 	setLayout(glayout);
 
 	for (int row = 0; row < m_fieldHeight; ++row) {
@@ -53,9 +61,6 @@ void Field::fieldCreate(State t_state)
 			connect(cell, &FieldCell::sigClick, this, &Field::slotClick);
 		}
 	}
-
-//	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
 }
 
 void Field::initField(int t_fieldCellPos) {
@@ -92,6 +97,8 @@ void Field::slotClick(int t_fieldCellPos)
 
 	if (m_cells[t_fieldCellPos]->isBomb()) {
 		explosion(t_fieldCellPos);
+		QMessageBox::information(this, "Поражение!", "Игра окончена!", QMessageBox::Ok);
+		setEnabled(false);
 		return;
 	}
 
@@ -102,7 +109,8 @@ void Field::slotClick(int t_fieldCellPos)
 	}
 
 	if (m_openCells == m_cellsCount - m_bombCount) {
-		QMessageBox::information(this, "Победа!", "Потраченное время - **", QMessageBox::Ok);
+		QMessageBox::information(this, "Победа!", "Игра окончена!", QMessageBox::Ok);
+		setEnabled(false);
 	}
 }
 
